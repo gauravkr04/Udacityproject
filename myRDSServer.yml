@@ -1,0 +1,49 @@
+Description: >
+  Script to create RDS databse
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
+  myUserName:
+    Description: User name to login to RDS
+    Type: String
+  
+  myPassword:
+    Description: Password for RDS login
+    Type: String
+  
+  myVPCSecurityGroup:
+    Description: VPC Security Group for traffic
+    Type: String
+
+Resources:
+  myDBSubnetGroup: 
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupDescription: myDBSubnetGroup
+      SubnetIds: 
+        - Fn::ImportValue:
+            !Sub "${EnvironmentName}-PRI1-SN"
+        - Fn::ImportValue:  
+            !Sub "${EnvironmentName}-PRI2-SN"
+    
+  RDSServer:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      VPCSecurityGroups: 
+        - !Sub "${myVPCSecurityGroup}"
+      PubliclyAccessible: false
+      MultiAZ: false
+      AllocatedStorage: 20
+      DBInstanceClass: db.t2.small
+      Engine: "mysql"
+      MasterUsername: !Sub "${myUserName}"
+      MasterUserPassword: !Sub "${myPassword}"
+      DBSubnetGroupName: !Ref myDBSubnetGroup
+      Tags: 
+        - 
+          Key: "Name"
+          Value: !Sub "${EnvironmentName} MS SQL RDS"
+    DeletionPolicy: "Retain"

@@ -1,0 +1,22 @@
+Description: CFN script to create security group and EC2 instance 
+Resources:
+  myWebAccessSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP to client host
+      GroupName: myYMLsecurityGroup
+      SecurityGroupIngress:
+        IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      VpcId: Ref: default-vpc
+  myWebServerInstance:
+    Type: AWS::EC2::Instance
+    Properties: 
+            

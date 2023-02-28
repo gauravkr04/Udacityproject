@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "UdacityProject"
+    },
+    {
+        "ParameterKey": "myUserName",
+        "ParameterValue": "myAdmin"
+    },
+    {
+        "ParameterKey": "myPassword",
+        "ParameterValue": "Admin1234$"
+    },
+    {
+        "ParameterKey": "myVPCSecurityGroup",
+        "ParameterValue": "sg-0c49443d66fa4ac58"
+    }
+]
